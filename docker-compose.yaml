@@ -1,0 +1,13 @@
+version: "3.6"
+
+services:
+  app:
+    build: ./sample-api
+    entrypoint: uvicorn app:app --host 0.0.0.0 --port 8000
+    ports:
+      - 8000:8000
+  locust:
+    build: ./locust
+    entrypoint: locust -H http://app:8000 -f tasks.py
+    ports:
+      - 8089:8089
